@@ -1,0 +1,43 @@
+/* Custom styles */
+.tool-card {
+  @apply bg-slate-800 hover:bg-slate-750 p-5 rounded-2xl border border-slate-700/80 cursor-pointer transition-all duration-200 group shadow-lg;
+}
+.tool-card:hover {
+  border-color: inherit;
+}
+.icon-box {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform;
+}
+.back-btn {
+  @apply text-slate-400 hover:text-white flex items-center space-x-2 text-xs font-semibold;
+}
+.panel {
+  @apply bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl;
+}
+.panel-title {
+  @apply text-xl font-bold mb-4 flex items-center gap-2.5;
+}
+.file-input {
+  @apply mb-4 block w-full text-xs text-slate-400
+         file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0
+         file:text-xs file:font-bold file:bg-indigo-600 file:text-white
+         hover:file:bg-indigo-700 cursor-pointer;
+}
+.btn {
+  @apply text-white font-bold py-2.5 px-6 rounded-xl transition text-xs flex items-center space-x-2;
+}
+.viewer-box {
+  @apply overflow-auto max-h-[70vh] bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl
+         flex flex-col items-center space-y-4 min-h-[300px] justify-center;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+}
+
+#signature-pad {
+  touch-action: none;
+}
