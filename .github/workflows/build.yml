@@ -1,0 +1,61 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept Android licenses
+        run: yes | sdkmanager --licenses || true
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Add Capacitor Android platform
+        run: |
+          npx cap add android || true
+          npx cap sync android
+
+      - name: Copy custom icons (if present)
+        run: |
+          if [ -d "icons" ]; then
+            rm -rf android/app/src/main/res/mipmap-anydpi-v26 || true
+            cp -r icons/* android/app/src/main/res/ || true
+          fi
+
+      - name: Build Debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDF-Tools-Pro-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
