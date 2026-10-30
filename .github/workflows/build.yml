@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -26,18 +26,15 @@ jobs:
           java-version: '17'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Accept licenses
         run: yes | sdkmanager --licenses || true
 
-      - name: Clean install
+      - name: Install dependencies
         run: |
           rm -rf node_modules package-lock.json android
           npm install --legacy-peer-deps
-
-      - name: Install Capacitor CLI
-        run: npm install -g @capacitor/cli@5.7.0
 
       - name: Add Android platform
         run: |
